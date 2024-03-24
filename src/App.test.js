@@ -21,3 +21,9 @@ describe('receives values from GitHub REST API using jest fetch mock', () => {
 })
 
 
+test("receives Github Image URL", async () => {
+    fetch.mockResponseOnce(JSON.stringify({avatar_url: 'https://avatars.githubusercontent.com/u/87375911?v=4'}))
+    render(<App />)
+    const gitHubURL = await waitFor(() => screen.getAllByAltText('Github profile image'))
+    expect(gitHubURL).toHaveAttribute('src', expect.stringContaining('githubusercontent'))
+})
